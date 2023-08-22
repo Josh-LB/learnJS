@@ -26,6 +26,10 @@ let bdy = document.querySelector('body');
 let chk = document.querySelector('.check');
 
 document.querySelector('.check').addEventListener(`click`, makeGuess);
+
+document.querySelector(`.guess`).addEventListener(`click`, function () {
+  document.querySelector(`.guess`).value = '';
+});
 // document.querySelector('.again').addEventListener(`click`, reset);
 
 document.querySelector(`.guess`).addEventListener('keyup', function (event) {
@@ -100,7 +104,7 @@ function reset() {
   numBox.textContent = `?`;
   sc.textContent = score = 20;
   msg.textContent = 'Start Guessing...';
-  document.querySelector(`.guess`).value = '0';
+  document.querySelector(`.guess`).value = 0;
   num = Math.trunc(Math.random() * 20 + 1);
   console.log(num);
   tries = [];
