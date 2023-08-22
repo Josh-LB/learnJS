@@ -33,6 +33,12 @@ function checkTries(g) {
 
 function makeGuess() {
   const guess = document.querySelector(`.guess`).value;
+
+  if (guess > 20 || guess < 1) {
+    msg.textContent = 'Please enter a number between 1 and 20';
+    return;
+  }
+
   if (checkTries(guess)) {
     msg.textContent = 'You already tried that number dumbo';
     return;
