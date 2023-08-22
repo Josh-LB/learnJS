@@ -29,6 +29,7 @@ document.querySelector('.check').addEventListener(`click`, makeGuess);
 
 document.querySelector(`.guess`).addEventListener(`click`, function () {
   document.querySelector(`.guess`).value = '';
+  window.scrollTo(0, 100);
 });
 // document.querySelector('.again').addEventListener(`click`, reset);
 
