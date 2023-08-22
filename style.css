@@ -14,7 +14,8 @@ html {
 body {
   font-family: 'Press Start 2P', sans-serif;
   color: #ffffff;
-  background-color: #222;
+  background-color: #000000;
+  background-image: linear-gradient(to top left, #ddaa7d 0%, #bb7ac8 100%);
   /* background-color: #60b347; */
 }
 
@@ -22,7 +23,7 @@ body {
 header {
   position: relative;
   height: 35vh;
-  border-bottom: 7px solid #ff0000;
+  border-bottom: 7px solid #ffffff;
 }
 
 main {
@@ -58,7 +59,7 @@ h1 {
 
 .number {
   background: #eee;
-  color: #333;
+  color: #bb7ac8;
   font-size: 6rem;
   width: 15rem;
   padding: 3rem 0rem;
@@ -98,7 +99,7 @@ h1 {
 .btn {
   border: none;
   background-color: #eee;
-  color: #222;
+  color: #bb7ac8;
   font-size: 2rem;
   font-family: inherit;
   padding: 2rem 3rem;

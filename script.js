@@ -9,7 +9,6 @@
 // const gs = (document.querySelector('.guess').value = 22);
 
 // console.log(document.querySelector('.guess').value);
-
 let num = Math.trunc(Math.random() * 20 + 1);
 console.log(num);
 
@@ -17,12 +16,23 @@ let score = 20;
 let highScore = 0;
 let p = false;
 let tries = [];
+
 let hs = document.querySelector('.highscore');
 let sc = document.querySelector('.score');
 let msg = document.querySelector('.message');
+let numBox = document.querySelector('.number');
+let bdy = document.querySelector('body');
 
 document.querySelector('.check').addEventListener(`click`, makeGuess);
 document.querySelector('.again').addEventListener(`click`, reset);
+
+document.querySelector(`.guess`).addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    makeGuess();
+  } else if (event.keyCode === 27) {
+    reset();
+  } //else console.log(event.keyCode);
+});
 
 function checkTries(g) {
   for (let i = 0; i <= tries.length; i++) {
@@ -32,36 +42,38 @@ function checkTries(g) {
 }
 
 function makeGuess() {
-  const guess = document.querySelector(`.guess`).value;
+  let guess = +document.querySelector(`.guess`).value;
+  document.querySelector(`.guess`).value = '';
 
+  if (p) return;
+  if (score <= 0) return;
   if (guess > 20 || guess < 1) {
     msg.textContent = 'Please enter a number between 1 and 20';
+
     return;
   }
-
   if (checkTries(guess)) {
     msg.textContent = 'You already tried that number dumbo';
     return;
   }
-  if (score <= 0) return;
-  if (p) return;
-  if (guess == num) {
+  //WIN
+  if (guess === num) {
     if (score > highScore) {
       highScore = +score;
       console.log(highScore);
       hs.textContent = highScore;
     }
     msg.textContent = 'Excellent Guess!! YOU WIN!';
-    document.querySelector('body').style.backgroundColor = '#60b347';
-    document.querySelector('.number').textContent = num;
+    bdy.style.backgroundColor = '#60b347';
+    numBox.style.width = `30rem`;
+    numBox.textContent = num;
     p = true;
   } else {
-    if (guess > num) {
+    if (guess > num || guess < num) {
       sc.textContent = score -= 1;
-      msg.textContent = 'Too high! try again';
-    } else if (guess < num) {
-      sc.textContent = score -= 1;
-      msg.textContent = 'Too low! try again';
+      msg.textContent = `${guess} is ${
+        guess > num ? 'too high!' : 'too low!'
+      }  try again`;
     }
     tries.push(guess);
     console.log(tries);
@@ -72,8 +84,9 @@ function makeGuess() {
 }
 
 function reset() {
-  document.querySelector('body').style.backgroundColor = '#000000';
-  document.querySelector('.number').textContent = `?`;
+  bdy.style.backgroundColor = '#000000';
+  numBox.style.width = `15rem`;
+  numBox.textContent = `?`;
   sc.textContent = score = 20;
   msg.textContent = 'Start Guessing...';
   document.querySelector(`.guess`).value = '';
