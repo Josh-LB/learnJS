@@ -11,48 +11,68 @@
 // console.log(document.querySelector('.guess').value);
 
 let num = Math.trunc(Math.random() * 20 + 1);
-let score = document.querySelector('.score').textContent;
+console.log(num);
+
+let score = 20;
 let highScore = 0;
 let p = false;
-console.log(num);
+let tries = [];
+let hs = document.querySelector('.highscore');
+let sc = document.querySelector('.score');
+let msg = document.querySelector('.message');
 
 document.querySelector('.check').addEventListener(`click`, makeGuess);
 document.querySelector('.again').addEventListener(`click`, reset);
 
+function checkTries(g) {
+  for (let i = 0; i <= tries.length; i++) {
+    if (g === tries[i]) return true;
+  }
+  return false;
+}
+
 function makeGuess() {
   const guess = document.querySelector(`.guess`).value;
+  if (checkTries(guess)) {
+    msg.textContent = 'You already tried that number dumbo';
+    return;
+  }
   if (score <= 0) return;
   if (p) return;
-
   if (guess == num) {
     if (score > highScore) {
       highScore = +score;
       console.log(highScore);
-      document.querySelector('.highscore').textContent = highScore;
+      hs.textContent = highScore;
     }
-    document.querySelector('.message').textContent =
-      'Excellent Guess!! YOU WIN!';
+    msg.textContent = 'Excellent Guess!! YOU WIN!';
+    document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').textContent = num;
     p = true;
-  } else if (guess > num) {
-    document.querySelector('.score').textContent = score -= 1;
-    document.querySelector('.message').textContent = 'Too high! try again';
-  } else if (guess < num) {
-    document.querySelector('.score').textContent = score -= 1;
-    document.querySelector('.message').textContent = 'Too low! try again';
+  } else {
+    if (guess > num) {
+      sc.textContent = score -= 1;
+      msg.textContent = 'Too high! try again';
+    } else if (guess < num) {
+      sc.textContent = score -= 1;
+      msg.textContent = 'Too low! try again';
+    }
+    tries.push(guess);
+    console.log(tries);
   }
   if (score <= 0) {
-    document.querySelector('.message').textContent =
-      'YOU FUCKIN SUCK. TRY AGAIN';
+    msg.textContent = 'YOU FUCKIN SUCK. TRY AGAIN';
   }
 }
 
 function reset() {
+  document.querySelector('body').style.backgroundColor = '#000000';
   document.querySelector('.number').textContent = `?`;
-  document.querySelector('.score').textContent = score = 20;
-  document.querySelector('.message').textContent = 'Start Guessing...';
+  sc.textContent = score = 20;
+  msg.textContent = 'Start Guessing...';
   document.querySelector(`.guess`).value = '';
   num = Math.trunc(Math.random() * 20 + 1);
   console.log(num);
+  tries = [];
   p = false;
 }
