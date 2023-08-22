@@ -22,9 +22,10 @@ let sc = document.querySelector('.score');
 let msg = document.querySelector('.message');
 let numBox = document.querySelector('.number');
 let bdy = document.querySelector('body');
+let chk = document.querySelector('.check');
 
 document.querySelector('.check').addEventListener(`click`, makeGuess);
-document.querySelector('.again').addEventListener(`click`, reset);
+// document.querySelector('.again').addEventListener(`click`, reset);
 
 document.querySelector(`.guess`).addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
@@ -40,12 +41,19 @@ function checkTries(g) {
   }
   return false;
 }
+function gameEnd() {
+  p = true;
+  chk.textContent = 'AGAIN!';
+}
 
 function makeGuess() {
   let guess = +document.querySelector(`.guess`).value;
   document.querySelector(`.guess`).value = '';
 
-  if (p) return;
+  if (p) {
+    reset();
+    return;
+  }
   if (score <= 0) return;
   if (guess > 20 || guess < 1) {
     msg.textContent = 'Please enter a number between 1 and 20';
@@ -63,11 +71,12 @@ function makeGuess() {
       console.log(highScore);
       hs.textContent = highScore;
     }
+
     msg.textContent = 'Excellent Guess!! YOU WIN!';
     bdy.style.backgroundColor = '#60b347';
     numBox.style.width = `30rem`;
     numBox.textContent = num;
-    p = true;
+    gameEnd();
   } else {
     if (guess > num || guess < num) {
       sc.textContent = score -= 1;
@@ -80,6 +89,7 @@ function makeGuess() {
   }
   if (score <= 0) {
     msg.textContent = 'YOU FUCKIN SUCK. TRY AGAIN';
+    gameEnd();
   }
 }
 
@@ -94,4 +104,5 @@ function reset() {
   console.log(num);
   tries = [];
   p = false;
+  chk.textContent = 'Check!';
 }
