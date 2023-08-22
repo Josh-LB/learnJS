@@ -9,6 +9,7 @@
 // const gs = (document.querySelector('.guess').value = 22);
 
 // console.log(document.querySelector('.guess').value);
+document.querySelector(`.guess`).value = 0;
 let num = Math.trunc(Math.random() * 20 + 1);
 console.log(num);
 
@@ -99,7 +100,7 @@ function reset() {
   numBox.textContent = `?`;
   sc.textContent = score = 20;
   msg.textContent = 'Start Guessing...';
-  document.querySelector(`.guess`).value = '';
+  document.querySelector(`.guess`).value = '0';
   num = Math.trunc(Math.random() * 20 + 1);
   console.log(num);
   tries = [];
